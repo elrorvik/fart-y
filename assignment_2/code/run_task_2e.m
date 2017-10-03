@@ -3,7 +3,7 @@ clear all;
 clc;
 
 parameters_longitudal_autopilot; % get parameters
-d = 0*deg2rad;
+d = 2*deg2rad;
 t_end = 100;
 
 
