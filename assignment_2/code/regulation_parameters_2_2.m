@@ -17,12 +17,16 @@ figure(figNum)
 %rlocus(1/H_evCar);
 
 H_phi_open = minreal(a_phi_2*(k_p_phi*s + k_i_phi)/(s^2*(s + a_phi_1 + a_phi_2*k_d_phi)));
-
-H_chi_open = minreal(g/(V_g*s)*(H_phi_open/(1+H_phi_open))*(k_i_chi/s+k_p_chi));
-H_chi_closed = minreal(H_chi_open/(1+H_chi_open));
+H_phi_closed = H_phi_open/(1+H_phi_open);
+H_chi_open = minreal(g/(V_g*s)*(H_phi_closed)*(k_i_chi/s+k_p_chi));
+H_chi_closed = H_chi_open/(H_chi_open +1);
 
 opt = stepDataOptions('StepAmplitude', 15*deg2rad);
 step(H_chi_closed, opt);
+
+figNum = figNum +1;
+figure(figNum)
+margin(H_phi_open);grid on; legend('H_{\phi}');
 
 %% Task 2d
 

@@ -19,8 +19,8 @@ k_p_phi = sign(a_phi_2)*delta_a_max /e_phi_max;
 k_d_phi = (2*zeta_phi*omega_n_phi - a_phi_1) / a_phi_2;
 k_i_phi = 0; %temp
 
-W_chi = 7;
-zeta_chi = 1;
+W_chi = 10;
+zeta_chi = 1.2;
 omega_n_chi = 1/W_chi*omega_n_phi;
 
 k_p_chi = 2*zeta_chi*omega_n_chi*V_g/g;
