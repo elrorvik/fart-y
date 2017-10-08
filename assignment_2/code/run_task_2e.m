@@ -21,13 +21,13 @@ figure(1)
 subplot(311)
 plot(chi.time,chi.signals.values.*rad2deg); hold on; 
 plot(chi_c.time, [chi_c_part_1; chi_c_part_2; chi_c_part_3].*rad2deg);  hold on;
-legend('\chi', '\chi_c'); 
+legend('\chi', '\chi^c'); 
 title('Simulation of \chi'); xlabel('time (s)'),ylabel('deg'),grid
 
 subplot(312)
 plot(phi.time,phi.signals.values.*rad2deg); hold on; 
 plot(phi_c.time, phi_c.signals.values*rad2deg);  hold on; axis([0 t_end -90 50]);
-legend('\phi', '\phi_c'); 
+legend('\phi', '\phi^c'); 
 title('Simulation of \phi'); xlabel('time (s)'),ylabel('deg'),grid
 
 subplot(313)
