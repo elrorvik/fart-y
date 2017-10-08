@@ -3,9 +3,8 @@ clear all;
 clc;
 
 parameters_longitudal_autopilot; % get parameters
-%change !!!!!
-chi_c  = 10*deg2rad;
-d = 40*deg2rad;
+
+d = 10*deg2rad;
 regulation_time = 100;
 t_end = 3*regulation_time + regulation_time;
 
@@ -23,7 +22,7 @@ model = 'lateral_autopilot_full_2g.slx';
 Legend = {};
 
 i  = 1;
-for integrator_error_limit = [0*deg2rad, 1*deg2rad, 5*deg2rad]
+for integrator_error_limit = [0*deg2rad, 2*deg2rad, 10*deg2rad]
     Legend(i) = {strcat('IEL = ', num2str(integrator_error_limit*rad2deg))};
     i = i+1;
     load_system(model);
@@ -41,14 +40,14 @@ end
 
 subplot(312)
 legend(Legend); axis([0 t_end -35 35]);
-title('Simulation of \delta')
+title('Simulation of \delta'); xlabel('time (s)'),ylabel('deg'),grid
 
 subplot(313)
-legend(Legend);
-title('The saturated integrator values')
+legend(Legend); xlabel('time (s)'),ylabel('deg'),grid
+title('The integral action of \chi ')
 
 subplot(311)
 plot(chi_c.time, [chi_c_part_1; chi_c_part_2; chi_c_part_3].*rad2deg); hold on;
-Legend_2 = cat(2,Legend,{'chi_c'});
-legend(Legend_2);
+Legend_2 = cat(2,Legend,{'\chi_c'});
+legend(Legend_2); title('Simulation of \phi'); xlabel('time (s)'),ylabel('deg'),grid
 title('Simulation of \chi')

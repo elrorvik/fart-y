@@ -17,7 +17,7 @@ omega_n_phi = sqrt(abs(a_phi_2)*delta_a_max /e_phi_max);
 k_p_phi = sign(a_phi_2)*delta_a_max /e_phi_max; 
 
 k_d_phi = (2*zeta_phi*omega_n_phi - a_phi_1) / a_phi_2;
-k_i_phi = 0; %temp
+k_i_phi = 0; 
 
 W_chi = 10;
 zeta_chi = 1.2;
