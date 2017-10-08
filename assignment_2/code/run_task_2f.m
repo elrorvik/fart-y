@@ -7,7 +7,7 @@ d = 2*deg2rad;
 regulation_time = 100;
 t_end = 3*regulation_time;
 
-figure(1)
+
 
 time = 0:1:t_end-1;
 
@@ -20,15 +20,13 @@ model = 'lateral_autopilot_full.slx';
 load_system(model);
 simOut = sim(model);
 
+figure(1)
 subplot(211)
 plot(chi.time,chi.signals.values.*rad2deg); hold on; 
 plot(chi_c.time, [chi_c_part_1; chi_c_part_2; chi_c_part_3].*rad2deg); hold on;
 legend('\chi', '\chi_c');
+title('Simulation of \chi')
 
 subplot(212)
 plot(delta_a_c.time,delta_a_c.signals.values.*rad2deg); hold on; axis([0 t_end -35 35]);
-
-subplot(211)
-title('Simulation of \chi')
-subplot(212)
 title('Simulation of \delta')

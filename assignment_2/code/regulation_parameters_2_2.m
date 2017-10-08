@@ -14,7 +14,7 @@ trans = C*Phi*B + D;
 H_evCar = s*(s^2+(a_phi_1 + a_phi_2*k_d_phi)*s + a_phi_2*k_p_phi);
 figure(figNum)
 %controlSystemDesigner('rlocus',1/H_evCar);
-%rlocus(1/H_evCar);
+rlocus(1/H_evCar);
 
 H_phi_open = minreal(a_phi_2*(k_p_phi*s + k_i_phi)/(s^2*(s + a_phi_1 + a_phi_2*k_d_phi)));
 H_phi_closed = H_phi_open/(1+H_phi_open);
