@@ -7,8 +7,6 @@ d = 2*deg2rad;
 regulation_time = 100;
 t_end = 3*regulation_time;
 
-
-
 time = 0:1:t_end-1;
 
 chi_c_part_1 = 5*deg2rad.*ones(1, regulation_time)';
@@ -21,12 +19,18 @@ load_system(model);
 simOut = sim(model);
 
 figure(1)
-subplot(211)
+subplot(311)
 plot(chi.time,chi.signals.values.*rad2deg); hold on; 
-plot(chi_c.time, [chi_c_part_1; chi_c_part_2; chi_c_part_3].*rad2deg); hold on;
-legend('\chi', '\chi_c');
-title('Simulation of \chi')
+plot(chi_c.time, [chi_c_part_1; chi_c_part_2; chi_c_part_3].*rad2deg);  hold on;
+legend('\chi', '\chi_c'); 
+title('Simulation of \chi'); xlabel('time (s)'),ylabel('deg'),grid
 
-subplot(212)
+subplot(312)
+plot(phi.time,phi.signals.values.*rad2deg); hold on; 
+plot(phi_c.time, phi_c.signals.values*rad2deg);  hold on; axis([0 t_end -90 50]);
+legend('\phi', '\phi_c'); 
+title('Simulation of \phi'); xlabel('time (s)'),ylabel('deg'),grid
+
+subplot(313)
 plot(delta_a_c.time,delta_a_c.signals.values.*rad2deg); hold on; axis([0 t_end -35 35]);
-title('Simulation of \delta')
+title('Simulation of \delta_a^c'); xlabel('time (s)'),ylabel('deg'),grid
