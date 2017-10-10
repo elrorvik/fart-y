@@ -26,6 +26,8 @@ omega_n_chi = 1/W_chi*omega_n_phi;
 k_p_chi = 2*zeta_chi*omega_n_chi*V_g/g;
 k_i_chi = omega_n_chi^2*V_g/g;
 
+integrator_error_limit = 2*deg2rad;
+
 A = [ -0.322 0.052 0.028 -1.12 0.002;
      0 0 1 -0.001 0;
      -10.6 0 -2.87 0.46 -0.65;
@@ -34,9 +36,8 @@ A = [ -0.322 0.052 0.028 -1.12 0.002;
 B = [ 0 0 0 0 10]';
 C = [0 0 0 1 0;
      0 0 1 0 0;
-     1 0 0 0 0 ;
      0 1 0 0 0];
-D = [0 0 0 0]';
+D = [0 0 0]';
 
 A_k = [ -0.322 0.052 0.028 -1.12 ;
      0 0 1 -0.001 ;
@@ -47,18 +48,18 @@ C_k = [0 0 1 0 ;
      1 0 0 0  ;
      0 1 0 0 ];
 D_k = [0 0 0]';
-E_k = [1 1 1 1];
-h = 0.01;
-I= diag([1 1 1 1]);
+E_k = eye(4);
+h = 0.01; % 100 hz
+I = eye(4);
 
 A_d = I + A_k*h;
 B_d = h*B_k;
-E_d = E_k;
+E_d = h*E_k;
 C_d = C_k;
 D_d = D_k;
 
-var_r = 2^2*deg2rad;
-var_p = 0.5^2*deg2rad;
-var_phi =0.2^2*deg2rad;
+var_r = (2*deg2rad)^2;
+var_p = (0.5*deg2rad)^2;
+var_phi = (0.2*deg2rad)^2;
 Q = 10^(-6)*diag([1 1 1 1]);
 R = diag([var_r var_p var_phi]);

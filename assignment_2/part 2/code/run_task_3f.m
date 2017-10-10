@@ -1,6 +1,6 @@
-close all;
+%close all;
 clear all;
-clc;
+%clc;
 
 parameters_P3;
 system_information_struct = struct('A_d',A_d,'B_d',B_d,'C_d',C_d,'E_d', E_d,'Q',Q,'I',I,'R',R);
@@ -21,11 +21,11 @@ noise_r = timeseries(random('norm', 0, sqrt(var_r),t_end,1)');
 noise_p = timeseries(random('norm', 0, sqrt(var_p),t_end,1)');
 noise_phi = timeseries(random('norm', 0, sqrt(var_phi),t_end,1)');
 
-model = 'lateral_autopilot_3e.slx';
+model = 'lateral_autopilot_3f.slx';
 load_system(model);
 simOut = sim(model);
 
-figNum = 0;
+figNum = 4;
 figNum = figNum +1;
 figure(figNum);
 subplot(211);
