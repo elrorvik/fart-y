@@ -12,9 +12,9 @@ figure(1)
 
 time = 0:1:t_end-1;
 
-chi_c_part_1 = 5*deg2rad.*ones(1, regulation_time)';
-chi_c_part_2 = 15*deg2rad.*ones(1, regulation_time)';
-chi_c_part_3 = 0*deg2rad.*ones(1, regulation_time)';
+chi_c_part_1 = -10*deg2rad.*ones(1, regulation_time)';
+chi_c_part_2 = 0*deg2rad.*ones(1, regulation_time)';
+chi_c_part_3 = 5*deg2rad.*ones(1, regulation_time)';
 chi_c = timeseries([chi_c_part_1; chi_c_part_2; chi_c_part_3]');
 
 
@@ -22,7 +22,7 @@ model = 'lateral_autopilot_full_2g.slx';
 Legend = {};
 
 i  = 1;
-for integrator_error_limit = [0*deg2rad, 2*deg2rad, 10*deg2rad]
+for integrator_error_limit = [2*deg2rad, 4*deg2rad, 5*deg2rad]
     Legend(i) = {strcat('IEL = ', num2str(integrator_error_limit*rad2deg))};
     i = i+1;
     load_system(model);
