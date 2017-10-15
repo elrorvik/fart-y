@@ -18,7 +18,7 @@ chi_c_part_3 = 0*deg2rad.*ones(1, regulation_time)';
 chi_c = timeseries([chi_c_part_1; chi_c_part_2; chi_c_part_3]');
 
 
-model = 'lateral_autopilot_3f.slx';
+model = 'lateral_autopilot_3e.slx';
 load_system(model);
 simOut = sim(model);
 
@@ -59,5 +59,4 @@ plot(p_est.time,p_est.signals.values.*rad2deg); hold on;
 plot(p.time,p.signals.values.*rad2deg); hold on;
 title('Simulation of p'); xlabel('time (s)'),ylabel('deg'),grid
 legend(Legend);
-
 
