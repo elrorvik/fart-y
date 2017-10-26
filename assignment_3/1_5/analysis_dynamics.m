@@ -3,6 +3,8 @@ clear;
 
 options = optimset('Display','off');
 
+n_c_max = (85*2*pi)/60;
+
 tstart=0;           % Sim start time
 tstop=10000;        % Sim stop time
 tsamp=100;           % Sampling time for how often states are stored. (NOT ODE solver time step)
@@ -15,22 +17,29 @@ r0=0;               % Inital yaw rate
 c=0;                % Current on (1)/off (0)
 
 n_c = 7.3;
-sim MSFartoystyring % The measurements from the simulink model are automatically written to the workspace.
+figNum = 0;
 
-u = v(:,1);
-v = v(:,1);
-psi = psi;
-r = r;
-x = p(:,1);
-y = p(:,2);
+for n_c = [n_c_max, 7.3, 5, 2, 0]
+    sim MSFartoystyring % The measurements from the simulink model are automatically written to the workspace.
 
-k0 = [900 0.2 0.1];
-F3 = @(k,t) sim_forward_speed_model_ulin(k,n_c,tstop,u0);
-lb = [600  -0.1 -0.09];
-ub = 10*[2000 1 1];
-k = lsqcurvefit(F3,k0,t,u,lb,ub,options);
-figure(1);
-plot(t,u); hold on;
-plot(t,F3(k,t),'LineWidth',2); hold on;
+    u = v(:,1);
+    v = v(:,2);
+    psi = psi;
+    r = r;
+    x = p(:,1);
+    y = p(:,2);
 
-legend('real','est');
+    
+    k0 = [900 0.9 0.1];
+    F3 = @(k,t) sim_forward_speed_model_ulin(k,n_c,tstop,u0);
+    lb = [600  -1 -1];
+    ub = 10*[2000 1 1];
+    k = lsqcurvefit(F3,k0,t,u,lb,ub,options)
+    figNum = figNum +1;
+    figure(figNum);
+    plot(t,u); hold on;
+    plot(t,F3(k,t),'LineWidth',2); hold on;
+
+    legend('real','est');
+
+end
