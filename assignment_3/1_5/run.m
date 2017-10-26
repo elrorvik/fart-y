@@ -1,6 +1,5 @@
 %clear;
 %close all;
-%% Parameteres
 tstart=0;           % Sim start time
 tstop=10000;        % Sim stop time
 tsamp=10;           % Sampling time for how often states are stored. (NOT ODE solver time step)
@@ -62,24 +61,7 @@ legend('true','est');
 %plot(t,f);
 
 
-u_dot = cos(psi).*u-sin(psi).*v;
-v_dot = sin(psi).*u+cos(psi).*v ; 
-i = 1;
-u = zeros(length(v_dot),1);
-v = zeros(length(v_dot),1);
-u(1) = v0(1);
-v(1) = v0(2);
 
-for j = [1:length(v_dot)-1]
-    u(j+1) = u(j) + h*u_dot(j);
-    v(j+1) = v(j) + h*v_dot(j);
-end
-
-figure(1);
-subplot(211); plot(t,u); hold on;
-subplot(212); plot(t,v); hold on;
-legend('true','est');
-%plot(t,f);
 
 
 
