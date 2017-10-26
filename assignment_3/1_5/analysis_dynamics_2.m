@@ -9,7 +9,7 @@ tsamp=100;           % Sampling time for how often states are stored. (NOT ODE s
                 
 p0=zeros(2,1);      % Initial position (NED)
 v0=[6.63 0]';       % Initial velocity (body)
-u0 
+u0 = v0(1);
 psi0=0;             % Inital yaw angle
 r0=0;               % Inital yaw rate
 c=0;                % Current on (1)/off (0)
@@ -24,13 +24,12 @@ r = r;
 x = p(:,1);
 y = p(:,2);
 
-k0 = [900 0.2 0.1];
-F3 = @(k,t) sim_forward_speed_model_ulin(k,n_c,tstop,u0);
-lb = [600  0.1 0.09];
-ub = [1500 0.6 0.13];
-k = lsqcurvefit(F3,k0,t,u,lb,ub,options);
+k0 = [942 8 0.1];
+F = @(k,t) sim_forward_speed_mass_damp_model(k,n_c,tstop,u0);
+
+k = lsqcurvefit(F,k0,t,u,[],[],options);
 figure(1);
 plot(t,u); hold on;
-plot(t,F3(k,t),'LineWidth',2); hold on;
+plot(t,F(k,t)); hold on;
 
 legend('real','est');
