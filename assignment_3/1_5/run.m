@@ -2,7 +2,7 @@
 %close all;
 tstart=0;           % Sim start time
 tstop=10000;        % Sim stop time
-tsamp=100;           % Sampling time for how often states are stored. (NOT ODE solver time step)
+tsamp=10;           % Sampling time for how often states are stored. (NOT ODE solver time step)
                 
 p0=zeros(2,1);      % Initial position (NED)
 v0=[6.63 0]';       % Initial velocity (body)
@@ -35,6 +35,8 @@ subplot(212); plot(t,r); title('r');
 
 
 n_c_1 = 7.3;
+
+n_c_vec = 7.3*ones(tstop*tsamp+1,1);
 n_c_2 = 5;
 u_1 = 5.9547;
 u_2 = 4.0785;
