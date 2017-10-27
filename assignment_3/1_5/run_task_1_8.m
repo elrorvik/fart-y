@@ -20,17 +20,20 @@ m = 3.5512*10^3;   %a % eq 13.197
 d_1 = 0.003*10^3;  % b
 d_2 = 0.004*10^3;  %c 
 
-lambda = 0.1; 
-K_i_u = lambda^2;
-K_p_u = 2*lambda;
+K_p_u = 0.8;
+K_i_u = 0.025/10*K_p_u/5;
 u_d = 4;
-e_u_limit = 1;
+e_u_limit = 100000000000;
 
-K_p_psi = 0.8;                
-K_i_psi = 4*10^-4;               
-K_d_psi = 150; %350; 
+Kp_psi = 0.8;
+Ki_psi = 0.025/10*Kp_psi/5;
+Kd_psi = 150;
 psi_d = 0*rad2deg;
-e_psi_limit = 2*rad2deg;
+
+nc = 7.3; 
+
+psi_d = 8*deg2rad;
+r_d = 0*deg2rad;
 
 sim MSFartoystyring_1_8 % The measurements from the simulink model are automatically written to the workspace.
 
@@ -45,5 +48,5 @@ figure(1);
 subplot(221); plot(t,u); title('u');hold on;
 subplot(223); plot(t,nc*rad2deg); title('nc'); hold on; legend('kp*e','ki*e');
 subplot(222); plot(t,psi*rad2deg); title('psi'); hold on;
-subplot(224); plot(t,dc*rad2deg); title('dc'); hold on; legend('kp*e','ki*e','kd*e');
+%subplot(224); plot(t,dc*rad2deg); title('dc'); hold on; legend('kp*e','ki*e','kd*e');
 
