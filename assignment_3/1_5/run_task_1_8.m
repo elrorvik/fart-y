@@ -15,9 +15,16 @@ r0=0;               % Inital yaw rate
 c=0;                % Current on (1)/off (0)
 
 
-m = 3.5512*10^3;   %a % eq 13.197
-d_1 = 0.003*10^3;  % b
-d_2 = 0.004*10^3;  %c 
+%m = 3.5512*10^3;   %a % eq 13.197
+%d_1 = 0.003*10^3;  % b
+%d_2 = 0.004*10^3;  %c 
+
+% constants for transferfunction for s
+a = -5.407*10^-7;
+b = 8.28*10^-9;
+c = 0.0007188;
+d = 9.609*10^-8;
+
 
 lambda = 0.1; 
 K_i_u = lambda^2;
