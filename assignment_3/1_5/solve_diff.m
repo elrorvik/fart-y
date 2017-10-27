@@ -15,8 +15,6 @@ K_v = double(S.K(1));
 T_v = double(S.T(1));
 T1 = double(S.T1(1));
 T2 = double(S.T2(1));
-[K,T, T1, T2]
-T = T1 + T2 - T
 
 %n_c_1 = 7.3;
 %n_c_2 = 5;

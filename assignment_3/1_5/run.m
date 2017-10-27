@@ -1,5 +1,5 @@
-%clear;
-%close all;
+clear;
+close all;
 tstart=0;           % Sim start time
 tstop=10000;        % Sim stop time
 tsamp=10;           % Sampling time for how often states are stored. (NOT ODE solver time step)
@@ -10,7 +10,7 @@ psi0=0;             % Inital yaw angle
 r0=0;               % Inital yaw rate
 c=0;                % Current on (1)/off (0)
 
-n_c = 7.3;
+n_c = 5;
 sim MSFartoystyring % The measurements from the simulink model are automatically written to the workspace.
 
 u = v(:,1);
@@ -34,33 +34,45 @@ subplot(211); plot(t,psi); title('\psi');
 subplot(212); plot(t,r); title('r');
 
 
-n_c_1 = 7.3;
+n_c = 7.3;
 
 n_c_vec = 7.3*ones(tstop*tsamp+1,1);
-n_c_2 = 5;
-u_1 = 5.9547;
-u_2 = 4.0785;
 
-c = 9.87*10^-6; %-( n_c_2 - n_c_1/u_1)/( u_2^2 /u_1 + u_2^2);
-b = -1.22598; %1/u_2*(n_c_1 - c*u_1^2);
-a = 1550;
+modelTF_2poles = tf([-5.407*10^(-7) 8.28*10^(-9)], [1 0.0007188 9.609*10^(-8)]);
 
-h = 0.01; % 100 hz
-u_est = zeros(tstop,1);
-u_est(1) = v0(1);
-v_est(1) = v0(2);
-i = 1;
-n_max = 85*2*pi/60;
-for j = [0:h:tstop]
-    n = n_c;
-    u_dot = 1/a * ( n_c + b*u_est(i) + c*u_est(i)^2);
-    u_est(i+1) = u_est(i) + h*u_dot;
-    i = i+1;   
-end
+solve_diff
 
-subplot(211); plot([0:h:tstop+h],u_est); hold on;
-legend('true','est');
-%plot(t,f);
+sim sim_esttimated_speed_model
+
+figure(4)
+plot(t,u); hold on;
+plot(u_est.time, u_est.signals.values); legend('sampled data', 'estimated model');
+
+
+% n_c_2 = 5;
+% u_1 = 5.9547;
+% u_2 = 4.0785;
+% 
+% c = 9.87*10^-6; %-( n_c_2 - n_c_1/u_1)/( u_2^2 /u_1 + u_2^2);
+% b = -1.22598; %1/u_2*(n_c_1 - c*u_1^2);
+% a = 1550;
+% 
+% h = 0.01; % 100 hz
+% u_est = zeros(tstop,1);
+% u_est(1) = v0(1);
+% v_est(1) = v0(2);
+% i = 1;
+% n_max = 85*2*pi/60;
+% for j = [0:h:tstop]
+%     n = n_c;
+%     u_dot = 1/a * ( n_c + b*u_est(i) + c*u_est(i)^2);
+%     u_est(i+1) = u_est(i) + h*u_dot;
+%     i = i+1;   
+% end
+% 
+% subplot(211); plot([0:h:tstop+h],u_est); hold on;
+% legend('true','est');
+% %plot(t,f);
 
 
 
