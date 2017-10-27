@@ -25,9 +25,9 @@ K_p_u = 2*lambda;
 u_d = 4;
 e_u_limit = 1;
 
-K_p_psi = 50;                
-K_i_psi = 0.7;               
-K_d_psi = 350; 
+K_p_psi = 5;                
+K_i_psi = 0;               
+K_d_psi = 0; %350; 
 psi_d = 0*rad2deg;
 e_psi_limit = 2*rad2deg;
 
