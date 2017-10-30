@@ -3,6 +3,11 @@
 
 clear all
 close all
+clc
+
+% for convenience:
+deg2rad = pi/180;
+rad2deg = 180/pi;
 
 %% from run.m
 tstart=0;           % Sim start time
@@ -11,19 +16,17 @@ tsamp=10;           % Sampling time for how often states are stored. (NOT ODE so
                 
 p0=zeros(2,1);      % Initial position (NED)
 v0=[6.63 0]';       % Initial velocity (body)
-psi0=0;             % Inital yaw angle
+psi0=0*deg2rad;     % Inital yaw angle
 r0=0;               % Inital yaw rate
 c=1;                % Current on (1)/off (0)
 
 %% Task 1.3
 % Design controller
 
-% for convenience:
-deg2rad = pi/180;
-rad2deg = 180/pi;
-
 %% Simulink input parameters 
 
+delta_max = 25*deg2rad;
+delta_min = -25*deg2rad;    
 nc = 7.3; 
 
 % Constant psi
@@ -33,21 +36,15 @@ r_d = 0*deg2rad;
 % Time-varying psi
 %psi_d = -0.3*sin(0.008*t);
 %r_d = -0.0024*cos(0.008*t);
-psi_a = -0.5;%-0.3;
-psi_f = 0.004;%0.008;
+psi_amp = -0.3;
+psi_freq = 0.008;
 
 %% Controller parameters
 
 % psi PID controller
-Kp_psi = 6;
-Ki_psi = 7*10^(-4);
-Kd_psi = 250;
-
-% Kp = 1.7, Ki = 7*10^(-4), Kd = 120
-
-% r PI controller (?)
-%Kp_r = 1;
-%Ki_r = 1;
+Kp_psi = 60;
+Ki_psi = 0.07;
+Kd_psi = 650;
 
 % -- safe values, nomoto1
 % Kp_psi = 0.9;
@@ -67,11 +64,15 @@ Kd_psi = 250;
 % Kd_psi = 150;
 % --
 
+% -- safer values, ship standing still
+% Kp_psi = 60;
+% Ki_psi = 0.07;
+% Kd_psi = 650;
+% --
 %% Model parameters
 
 % nomoto1 model param
-T = 197.5;
-%K1 = 0.00466/dc; 
+T = 197.5; 
 K1 = 0.089; % K=r/delta
 
 % nomoto2 model param
@@ -106,21 +107,34 @@ sim heading_controller
 % legend('psi tilde', 'r tilde', 'psi', 'psi d')
 
 % -- psi og r --
+% figure(10)
+% subplot(2,1,1)
+%     plot(t, psi*rad2deg, t, psi_d*rad2deg)
+%     xlabel('time')
+%     ylabel('yaw (\psi)')
+%     legend('psi sim', 'psi d')
+% subplot(2,1,2)
+%     plot(t, -r*rad2deg, t, -r_d*rad2deg)
+%     xlabel('time')
+%     ylabel('-yaw rate (-r)')
+%     legend('-r sim', '-r d')
+    
+% -- psi og r (fra simulink) --
 figure(10)
 subplot(2,1,1)
-    plot(t, psi*rad2deg, t, psi_d*rad2deg)
+    plot(t, psi_simu*rad2deg, t, psi_d_simu*rad2deg, t, psi_tilde*rad2deg)
     xlabel('time')
     ylabel('yaw (\psi)')
-    legend('psi sim', 'psi d')
+    legend('psi sim', 'psi d', 'psi tilde')
 subplot(2,1,2)
-    plot(t, -r*rad2deg, t, -r_d*rad2deg)
+    plot(t, r_simu*rad2deg, t, r_d_simu*rad2deg, t, r_tilde*rad2deg)
     xlabel('time')
-    ylabel('-yaw rate (-r)')
-    legend('-r sim', '-r d')
+    ylabel('yaw rate (r)')
+    legend('r sim', 'r d', 'r tilde')
 
 %-- psi --
 % figure(11)
-% plot(t, psi*rad2deg)
+% plot(t, psi_simu*rad2deg)
 % xlabel('time')
 % ylabel('yaw (\psi)')
 
