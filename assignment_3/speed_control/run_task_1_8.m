@@ -12,7 +12,7 @@ tstop=20000;        % Sim stop time
 tsamp=10;           % Sampling time for how often states are stored. (NOT ODE solver time step)
                 
 p0=zeros(2,1);      % Initial position (NED)
-v0=[6.63 0]';       % Initial velocity (body)
+v0=[4 0]';       % Initial velocity (body)
 psi0=0;             % Inital yaw angle
 r0=0;               % Inital yaw rate
 c=0;                % Current on (1)/off (0)
@@ -21,15 +21,19 @@ wn = 0.0017;
 K = 0.98;
 T = 590.2;
 
-Kp_u = 100*wn^2*T/K;
-Ki_u = 100*wn^3*T/(10*K);
+Kp_u = 500*wn^2*T/K 
+Ki_u = 1000*wn^3*T/(10*K) %0.005; 
 Kd_u = 0;
-e_u_limit = 100000000;
+e_u_limit = 6;
 
 nc = 7.3; 
-psi_d = 8*deg2rad;
+psi_d = 0*deg2rad
 r_d = 0*deg2rad;
-u_d = 2;
+tstep = 2000;
+u_d_vec = 4*ones(1, tstop);
+u_d_vec(tstep:end) = 7*ones(1,tstop-tstep+1);
+
+u_d = timeseries(u_d_vec);
 
 sim MSFartoystyring_1_8 % The measurements from the simulink model are automatically written to the workspace.
 
