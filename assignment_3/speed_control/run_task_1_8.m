@@ -8,7 +8,7 @@ deg2rad = pi/180;
 rad2deg = 180/pi;
 
 tstart=0;           % Sim start time
-tstop=2000;        % Sim stop time
+tstop=20000;        % Sim stop time
 tsamp=10;           % Sampling time for how often states are stored. (NOT ODE solver time step)
                 
 p0=zeros(2,1);      % Initial position (NED)
@@ -21,15 +21,15 @@ wn = 0.0017;
 K = 0.98;
 T = 590.2;
 
-Kp_u = wn^2*T/K;
-Ki_u = wn^3*T/(10*K);
+Kp_u = 100*wn^2*T/K;
+Ki_u = 100*wn^3*T/(10*K);
 Kd_u = 0;
 e_u_limit = 100000000;
 
 nc = 7.3; 
 psi_d = 8*deg2rad;
 r_d = 0*deg2rad;
-u_d = 4;
+u_d = 2;
 
 sim MSFartoystyring_1_8 % The measurements from the simulink model are automatically written to the workspace.
 
