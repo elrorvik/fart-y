@@ -1,0 +1,28 @@
+
+% nc = nc_max , second order
+num = [0.132936079273262 4.074084240875063e-04];
+den = [1 0.146384836056214 4.149139976838490e-04];
+sys = tf(num,den);
+
+% first order nc=0
+K = 1;
+T = 2017;
+
+% nc = 2
+K = 1;
+T = 877,5;
+
+% nc = 4;
+K = 0.98;
+T = 608.9;
+
+% nc = 7;
+K = 0.98;
+T = 590.2;
+
+sys = tf(num,den);
+
+%margin(sys);
+[wn,zeta,P] = damp(sys); % wn = natural frequency, zeta = damping ratio , P = poles
+
+% table 12.2
