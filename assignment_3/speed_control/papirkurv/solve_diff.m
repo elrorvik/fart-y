@@ -1,6 +1,6 @@
 syms K T T1 T2
-a = -5.407*10^-7;
-b = 8.28*10^-9;
+a = 8.28*10^-9;
+b = -5.407*10^-7;
 c = 0.0007188;
 d = 9.609*10^-8;
 
@@ -10,8 +10,14 @@ eq3 = 1/d == T1*T2;
 eq4 = (T1+T2) == c/d;
 
 eq = [eq1,eq2,eq3,eq4];
-S = solve(eq, 'K', 'T', 'T1,T2);
+S = solve(eq, K, T, T1, T2);
+K_v = double(S.K(1));
+T_v = double(S.T(1));
+T1 = double(S.T1(1));
+T2 = double(S.T2(1));
 
+[K,T, T1, T2]
+T = T1 + T2 - T;
 
 %n_c_1 = 7.3;
 %n_c_2 = 5;
