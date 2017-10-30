@@ -1,6 +1,9 @@
 clear;
 close all;
 
+addpath(genpath('../header_control'));
+parameters_heading_controller; % pick up parameters
+
 deg2rad = pi/180;
 rad2deg = 180/pi;
 
@@ -14,26 +17,19 @@ psi0=0;             % Inital yaw angle
 r0=0;               % Inital yaw rate
 c=0;                % Current on (1)/off (0)
 
+wn = 0.0017;
+K = 0.98;
+T = 590.2;
 
-
-m = 3.5512*10^3;   %a % eq 13.197
-d_1 = 0.003*10^3;  % b
-d_2 = 0.004*10^3;  %c 
-
-K_p_u = 0.8;
-K_i_u = 0.025/10*K_p_u/5;
-u_d = 4;
-e_u_limit = 100000000000;
-
-Kp_psi = 0.8;
-Ki_psi = 0.025/10*Kp_psi/5;
-Kd_psi = 150;
-psi_d = 0*rad2deg;
+Kp_u = wn^2*T/K;
+Ki_u = wn^3*T/(10*K);
+Kd_u = 0;
+e_u_limit = 100000000;
 
 nc = 7.3; 
-
 psi_d = 8*deg2rad;
 r_d = 0*deg2rad;
+u_d = 4;
 
 sim MSFartoystyring_1_8 % The measurements from the simulink model are automatically written to the workspace.
 

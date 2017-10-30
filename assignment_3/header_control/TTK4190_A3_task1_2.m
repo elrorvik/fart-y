@@ -24,7 +24,7 @@ rad2deg = 180/pi;
 % Simulink parameters 
 nc = 7.3; % rad
 dc = 3*deg2rad;
-psi_d = 5*deg2rad;
+psi_d = 8*deg2rad;
 
 % Nomoto 1st order
 T = 197.5;
@@ -38,6 +38,11 @@ T2 = 325;
 T3 = 490;
 diff_T = T-(T1+T2-T3);
 K2 = 0.00466/dc; %0.089;
+
+num_s = -0.0003433;
+num = -1.921*10^(-6);
+denum_s = 0.006835;
+denum = 2.158*10^(-5);
 
 sim heading_control_models
 
@@ -63,16 +68,16 @@ sim heading_control_models
 %     ylabel('y')
     
 figure(3)
-plot(t, -r*rad2deg, t, r_nomoto1*rad2deg, t, r_nomoto2*rad2deg)
+plot(t, -r*rad2deg, t, r_nomoto1*rad2deg, t, r_nomoto2*rad2deg, t, r_nomoto2*rad2deg)
 xlabel('time')
 ylabel('r')
-legend('-r', 'r nomoto1', 'r nomoto2');
+legend('-r', 'r nomoto1', 'r nomoto2', '- r nomoto2 2');
 
 figure(4)
-plot(t, -psi*rad2deg, t, psi_nomoto1*rad2deg, t, psi_nomoto2*rad2deg)
+plot(t, -psi*rad2deg, t, psi_nomoto1*rad2deg, t, psi_nomoto2*rad2deg, t, -psi_nomoto2_2*rad2deg)
 xlabel('time')
 ylabel('psi')
-legend('-psi', 'psi nomoto1', 'psi nomoto2');
+legend('-psi', 'psi nomoto1', 'psi nomoto2', '- psi nomoto2 2');
 
 % %% Curvefitting 
 % x = [0 1 2 3 4 5 6 7 8]'; %9 10 11]'; 
