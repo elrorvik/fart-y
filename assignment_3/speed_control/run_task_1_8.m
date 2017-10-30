@@ -13,7 +13,7 @@ tsamp=10;           % Sampling time for how often states are stored. (NOT ODE so
                 
 p0=zeros(2,1);      % Initial position (NED)
 v0=[4 0]';       % Initial velocity (body)
-psi0=0;             % Inital yaw angle
+psi0=0*deg2rad;             % Inital yaw angle
 r0=0;               % Inital yaw rate
 c=1;                % Current on (1)/off (0)
 
@@ -21,10 +21,10 @@ wn = 0.0017;
 K = 0.98;
 T = 590.2;
 
-Kp_u = 15 %500*wn^2*T/K 
-Ki_u = 0.5%1000*wn^3*T/(10*K) 
+Kp_u = 80 %500*wn^2*T/K 
+Ki_u = 0.08%1000*wn^3*T/(10*K) 
 Kd_u = 0;
-e_u_limit = 6;
+e_u_limit = 0.7;
 
 %nc = 7.3; 
 psi_d = 0*deg2rad
@@ -35,7 +35,7 @@ ustepend = 7;
 u_d_vec = 4*ones(1, tstop);
 u_d_vec(tstep:end) = 7*ones(1,tstop-tstep+1);
 
-u_d = timeseries(u_d_vec);
+%u_d = timeseries(u_d_vec);
 
 sim MSFartoystyring_1_8 % The measurements from the simulink model are automatically written to the workspace.
 
@@ -47,9 +47,10 @@ x = p(:,1);
 y = p(:,2);
 
 figure(1);
-subplot(221); plot(t,u); title('u');hold on;
+subplot(221); plot(t,u);hold on;
+plot(u_d.time, u_d.signals.values, '--'), title('u'), legend('u','u_d');
 subplot(223); plot(t,nc); title('nc'); hold on; legend('kp*e','ki*e');
-subplot(222); plot(t,psi*rad2deg); title('psi'); hold on;
-subplot(224); plot(u_error.time, u_error.signals.values); title('u_error'); hold on;
+subplot(222); plot(t,psi*rad2deg); title('\psi'); hold on;
+subplot(224); plot(u_error.time, u_error.signals.values); title('u_{tilde}'); hold on;
 %subplot(224); plot(t,dc*rad2deg); title('dc'); hold on; legend('kp*e','ki*e','kd*e');
 
