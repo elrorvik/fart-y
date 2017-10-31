@@ -8,12 +8,12 @@ deg2rad = pi/180;
 rad2deg = 180/pi;
 
 tstart=0;           % Sim start time
-tstop=2000;        % Sim stop time
+tstop=20000;        % Sim stop time
 tsamp=10;           % Sampling time for how often states are stored. (NOT ODE solver time step)
                 
-p0=zeros(2,1);      % Initial position (NED)
-v0=[4 0]';       % Initial velocity (body)
-psi0=0*deg2rad;             % Inital yaw angle
+p0=[1500 500]';      % Initial position (NED)
+v0=[6.63 0]';       % Initial velocity (body)
+psi0=50*deg2rad;             % Inital yaw angle
 r0=0;               % Inital yaw rate
 c=1;                % Current on (1)/off (0)
 
@@ -21,15 +21,21 @@ wn = 0.0017;
 K = 0.98;
 T = 590.2;
 
-Kp_u = 80 %500*wn^2*T/K 
-Ki_u = 0.08%1000*wn^3*T/(10*K) 
+Kp_u = 80; %500*wn^2*T/K 
+Ki_u = 0.08; %1000*wn^3*T/(10*K) 
 Kd_u = 0;
-e_u_limit = 0.7;
+e_u_limit = 3;
 
-Kp_los = 8;
+L = 304.8;  %m
+Delta = 2.5*L;
+Kp_los = 1/Delta;
+R_vel = 300;        %m
+R_change_wp = 700;  %m
+wp = load('WP.mat');
+wp = [p0 wp.WP];
 
 %nc = 7.3; 
-psi_d = 0*deg2rad
+psi_d = 0*deg2rad;
 r_d = 0*deg2rad;
 tstep = 500;
 ustep0 = 4;
@@ -39,7 +45,7 @@ u_d_vec(tstep:end) = 7*ones(1,tstop-tstep+1);
 
 %u_d = timeseries(u_d_vec);
 
-sim MSFartoystyring_1_8 % The measurements from the simulink model are automatically written to the workspace.
+sim MSFartoystyring_2_1 % The measurements from the simulink model are automatically written to the workspace.
 
 u = v(:,1);
 v = v(:,2);
@@ -47,12 +53,15 @@ psi = psi;
 r = r;
 x = p(:,1);
 y = p(:,2);
+tstop = t(end);
 
-figure(1);
-subplot(221); plot(t,u);hold on;
-plot(u_d.time, u_d.signals.values, '--'), title('u'), legend('u','u_d');
+pathplotter(x, y,  psi, tsamp, 2, tstart, tstop, 0, wp)
+
+figure(3);
+subplot(221); plot(t,u), title('u');
 subplot(223); plot(t,nc); title('nc'); hold on; legend('kp*e','ki*e');
 subplot(222); plot(t,psi*rad2deg); title('\psi'); hold on;
-subplot(224); plot(u_error.time, u_error.signals.values); title('u_{tilde}'); hold on;
+subplot(224); plot(t,delta_c*rad2deg); title('\delta_c'); hold on;
 %subplot(224); plot(t,dc*rad2deg); title('dc'); hold on; legend('kp*e','ki*e','kd*e');
+
 
