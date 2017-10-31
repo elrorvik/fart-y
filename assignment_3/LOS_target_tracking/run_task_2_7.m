@@ -29,10 +29,13 @@ e_u_limit = 3;
 L = 304.8;  %m
 Delta = 2.5*L;
 Kp_los = 1/Delta;
-R_vel = 300;        %m
+R_vel = 200;        %m
 R_change_wp = 500;  %m
 wp = load('WP.mat');
-wp = [p0 wp.WP];
+wp = wp.WP;
+U_target = 3;     %m/s
+U_max = 8;        %m/s
+Delta_s = 1;      %m/s
 
 %nc = 7.3; 
 psi_d = 0*deg2rad;
@@ -45,7 +48,7 @@ u_d_vec(tstep:end) = 7*ones(1,tstop-tstep+1);
 
 %u_d = timeseries(u_d_vec);
 
-sim MSFartoystyring_2_1 % The measurements from the simulink model are automatically written to the workspace.
+sim MSFartoystyring_2_7 % The measurements from the simulink model are automatically written to the workspace.
 
 u = v(:,1);
 v = v(:,2);
@@ -55,7 +58,7 @@ x = p(:,1);
 y = p(:,2);
 tstop = t(end);
 
-pathplotter(x, y,  psi, tsamp, 2, tstart, tstop, 0, wp)
+pathplotter(x, y,  psi, tsamp, 2, tstart, tstop, 1, wp(:,2:end))
 
 figure(3);
 subplot(221); plot(t,u), title('u');
@@ -64,5 +67,11 @@ subplot(222); plot(t,psi*rad2deg); title('\psi'); hold on;
 plot(t, psi_d*rad2deg), legend('\psi', '\psi_d');
 subplot(224); plot(t,delta_c*rad2deg); title('\delta_c'); hold on;
 %subplot(224); plot(t,dc*rad2deg); title('dc'); hold on; legend('kp*e','ki*e','kd*e');
+
+figure(4);
+plot(t,beta); hold on;
+plot(t,chi);
+plot(t,chi_d);
+plot(t,psi); legend('\beta', '\chi', '\chi_d', '\psi');
 
 

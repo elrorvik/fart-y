@@ -45,7 +45,7 @@ u_d_vec(tstep:end) = 7*ones(1,tstop-tstep+1);
 
 %u_d = timeseries(u_d_vec);
 
-sim MSFartoystyring_2_1 % The measurements from the simulink model are automatically written to the workspace.
+sim MSFartoystyring_2_5 % The measurements from the simulink model are automatically written to the workspace.
 
 u = v(:,1);
 v = v(:,2);
@@ -64,5 +64,11 @@ subplot(222); plot(t,psi*rad2deg); title('\psi'); hold on;
 plot(t, psi_d*rad2deg), legend('\psi', '\psi_d');
 subplot(224); plot(t,delta_c*rad2deg); title('\delta_c'); hold on;
 %subplot(224); plot(t,dc*rad2deg); title('dc'); hold on; legend('kp*e','ki*e','kd*e');
+
+figure(4);
+plot(t,beta); hold on;
+plot(t,chi);
+plot(t,chi_d);
+plot(t,psi); legend('\beta', '\chi', '\chi_d', '\psi');
 
 
