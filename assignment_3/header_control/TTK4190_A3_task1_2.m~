@@ -11,7 +11,7 @@ clc
 
 %% from run.m
 tstart=0;           % Sim start time
-tstop=20000;        % Sim stop time
+tstop=10000;        % Sim stop time
 tsamp=10;           % Sampling time for how often states are stored. (NOT ODE solver plotime step)
                 
 p0=zeros(2,1);      % Initial position (NED)
@@ -44,19 +44,6 @@ T3 = 490;
 diff_T = T-(T1+T2-T3);
 K2 = 0.00466/dc; %0.089;
 
-% En måte å estimere parametrene til 2. orden vha. LSQ
-% Må bare ha en simulink-fil med nomoto-modellen som gir estimert r som
-% output til workspace.
-% delta_c = 8*deg2rad;
-% sim MSFartoystyring;
-% x0 = [100 80 35 0.089]';
-% F2 = @(x,t) sim_Nomoto2_model(x, delta_c, tstop, tsamp);
-% x = lsqcurvefit(F2, [x0], t, r,[10,10,1,-1],[500 500 500 1],OPT);
-% T1 = x(1);
-% T2 = x(2);
-% T3 = x(3);
-% K  = x(4);
-
 num_s = -0.0003433;
 num = -1.921*10^(-6);
 denum_s = 0.006835;
@@ -88,8 +75,8 @@ sim heading_control_models
 figure(3)
 plot(t(1:2:500), -r(1:2:500)*rad2deg,...
      t(1:500), r_nomoto1(1:500)*rad2deg,...
-     t(1:500), r_nomoto2(1:500)*rad2deg,...
-     t, -r_nomoto2_2*rad2deg)
+     t(1:500), r_nomoto2(1:500)*rad2deg)%,...
+     %t, r_nomoto2*rad2deg)
 xlabel('time')
 ylabel('r')
 legend('-r', 'r nomoto1', 'r nomoto2', '- r nomoto2 2');
@@ -104,17 +91,10 @@ ylabel('psi')
 legend('-psi', 'psi nomoto1', 'psi nomoto2', '- psi nomoto2 2');
 
 figure(5)
-subplot(211)
-plot(t, (psi - psi_nomoto2_2)*rad2deg)
+plot(t, (psi - psi_nomoto2)*rad2deg)
 xlabel('time')
-ylabel('angle error [deg]')
-legend('\psi - \psi_{nomoto}');
-%
-subplot(212)
-plot(t, (r - r_nomoto2_2)*rad2deg)
-xlabel('time')
-ylabel('turning rate error [deg/s]')
-legend('r - r_{nomoto}');
+ylabel('\psi_{nomoto} - \psi')
+legend('Error');
 
 % %% Curvefitting 
 % x = [0 1 2 3 4 5 6 7 8]'; %9 10 11]'; 
