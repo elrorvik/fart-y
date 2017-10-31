@@ -15,7 +15,7 @@ p0=[1500 500]';      % Initial position (NED)
 v0=[6.63 0]';       % Initial velocity (body)
 psi0=50*deg2rad;             % Inital yaw angle
 r0=0;               % Inital yaw rate
-c=1;                % Current on (1)/off (0)
+c=0;                % Current on (1)/off (0)
 
 wn = 0.0017;
 K = 0.98;
