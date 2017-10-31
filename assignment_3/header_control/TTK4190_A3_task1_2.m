@@ -1,8 +1,13 @@
 %% TTK4190
 % Assignment 3
 
+set(0,'DefaultLineLineWidth',2);
+set(0,'defaultfigurecolor','white');
+% n = 24;
+% set(0,'DefaultAxesColorOrder',brewermap(n,'Set2'))
 clear all
 close all
+clc
 
 %% from run.m
 tstart=0;           % Sim start time
@@ -68,13 +73,19 @@ sim heading_control_models
 %     ylabel('y')
     
 figure(3)
-plot(t, -r*rad2deg, t, r_nomoto1*rad2deg, t, r_nomoto2*rad2deg, t, r_nomoto2*rad2deg)
+plot(t(1:2:500), -r(1:2:500)*rad2deg,...
+     t(1:500), r_nomoto1(1:500)*rad2deg,...
+     t(1:500), r_nomoto2(1:500)*rad2deg)%,...
+     %t, r_nomoto2*rad2deg)
 xlabel('time')
 ylabel('r')
 legend('-r', 'r nomoto1', 'r nomoto2', '- r nomoto2 2');
 
 figure(4)
-plot(t, -psi*rad2deg, t, psi_nomoto1*rad2deg, t, psi_nomoto2*rad2deg, t, -psi_nomoto2_2*rad2deg)
+plot(t, -psi*rad2deg,...
+     t, psi_nomoto1*rad2deg,...
+     t, psi_nomoto2*rad2deg,...
+     t, -psi_nomoto2_2*rad2deg)
 xlabel('time')
 ylabel('psi')
 legend('-psi', 'psi nomoto1', 'psi nomoto2', '- psi nomoto2 2');
