@@ -8,7 +8,7 @@ deg2rad = pi/180;
 rad2deg = 180/pi;
 
 tstart=0;           % Sim start time
-tstop=10000;        % Sim stop time
+tstop=3000;        % Sim stop time
 tsamp=10;           % Sampling time for how often states are stored. (NOT ODE solver time step)
                 
 p0=[1500 500]';      % Initial position (NED)
@@ -27,16 +27,16 @@ Kd_u = 0;
 e_u_limit = 3;
 
 L = 304.8;  %m
-Delta = 2.5*L;
+Delta = 10*L;
 Kp_los = 1/Delta;
 R_vel = 200;        %m
 R_change_wp = 500;  %m
 wp = load('WP.mat');
 wp = wp.WP;
 U_target = 3;     %m/s
-U_max = 8;        %m/s
+U_max = 9;        %m/s
 Delta_s = 1;      %m/s
-kappa = 0.1;
+kappa = 0.005;
 
 %nc = 7.3; 
 psi_d = 0*deg2rad;
