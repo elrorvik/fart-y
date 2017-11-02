@@ -8,14 +8,14 @@ deg2rad = pi/180;
 rad2deg = 180/pi;
 
 tstart=0;           % Sim start time
-tstop=20000;        % Sim stop time
+tstop=10000;        % Sim stop time
 tsamp=10;           % Sampling time for how often states are stored. (NOT ODE solver time step)
                 
 p0=[1500 500]';      % Initial position (NED)
 v0=[6.63 0]';       % Initial velocity (body)
 psi0=50*deg2rad;             % Inital yaw angle
 r0=0;               % Inital yaw rate
-c=1;                % Current on (1)/off (0)
+c=0;                % Current on (1)/off (0)
 
 wn = 0.0017;
 K = 0.98;
@@ -36,6 +36,7 @@ wp = wp.WP;
 U_target = 3;     %m/s
 U_max = 8;        %m/s
 Delta_s = 1;      %m/s
+kappa = 0.1;
 
 %nc = 7.3; 
 psi_d = 0*deg2rad;
@@ -61,7 +62,7 @@ tstop = t(end);
 pathplotter(x, y,  psi, tsamp, 2, tstart, tstop, 1, wp(:,2:end))
 
 figure(3);
-subplot(221); plot(t,u), title('u');
+subplot(221); plot(t,u), hold on; plot(t, U_d), legend('u', 'U_d'), title('u');
 subplot(223); plot(t,nc); title('nc'); hold on; legend('kp*e','ki*e');
 subplot(222); plot(t,psi*rad2deg); title('\psi'); hold on;
 plot(t, psi_d*rad2deg), legend('\psi', '\psi_d');
