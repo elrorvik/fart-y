@@ -1,15 +1,19 @@
 %% TTK4190
 % Assignment 3
 
+set(0,'DefaultLineLineWidth',2);
+set(0,'defaultfigurecolor','white');
+% n = 24;
+% set(0,'DefaultAxesColorOrder',brewermap(n,'Set2'))
 clear all
 close all
 clc
 
+%% from run.m
 % for convenience:
 deg2rad = pi/180;
 rad2deg = 180/pi;
 
-%% from run.m
 tstart=0;           % Sim start time
 tstop=10000;        % Sim stop time
 tsamp=10;           % Sampling time for how often states are stored. (NOT ODE solver plotime step)
@@ -121,13 +125,19 @@ sim heading_controller
     
 % -- psi og r (fra simulink) --
 figure(10)
+interval_of_interest = 1:350;
+compressed_interval = 1:2:350;
 subplot(2,1,1)
-    plot(t, psi_simu*rad2deg, t, psi_d_simu*rad2deg, t, psi_tilde*rad2deg)
+    plot(t(interval_of_interest), psi_simu(interval_of_interest)*rad2deg,...
+         t(compressed_interval), psi_d_simu(compressed_interval)*rad2deg,'o',...
+         t(interval_of_interest), psi_tilde(interval_of_interest)*rad2deg)
     xlabel('time')
     ylabel('yaw (\psi)')
     legend('psi sim', 'psi d', 'psi tilde')
 subplot(2,1,2)
-    plot(t, r_simu*rad2deg, t, r_d_simu*rad2deg, t, r_tilde*rad2deg)
+    plot(t(interval_of_interest), r_simu(interval_of_interest)*rad2deg,...
+        t(compressed_interval), r_d_simu(compressed_interval)*rad2deg,'o',...
+        t(interval_of_interest), r_tilde(interval_of_interest)*rad2deg)
     xlabel('time')
     ylabel('yaw rate (r)')
     legend('r sim', 'r d', 'r tilde')

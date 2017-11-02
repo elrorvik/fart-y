@@ -15,7 +15,7 @@ p0=[1500 500]';      % Initial position (NED)
 v0=[6.63 0]';       % Initial velocity (body)
 psi0=50*deg2rad;             % Inital yaw angle
 r0=0;               % Inital yaw rate
-c=0;                % Current on (1)/off (0)
+c=1;                % Current on (1)/off (0)
 
 wn = 0.0017;
 K = 0.98;
@@ -30,7 +30,7 @@ L = 304.8;  %m
 Delta = 2.5*L;
 Kp_los = 1/Delta;
 R_vel = 300;        %m
-R_change_wp = 700;  %m
+R_change_wp = 500;  %m
 wp = load('WP.mat');
 wp = [p0 wp.WP];
 
@@ -61,7 +61,11 @@ figure(3);
 subplot(221); plot(t,u), title('u');
 subplot(223); plot(t,nc); title('nc'); hold on; legend('kp*e','ki*e');
 subplot(222); plot(t,psi*rad2deg); title('\psi'); hold on;
+<<<<<<< HEAD
 subplot(222); plot(t,psi_tilde*rad2deg); legend('psi', 'psi_tilde'); hold on;
+=======
+plot(t, psi_d*rad2deg), legend('\psi', '\psi_d');
+>>>>>>> a6a3ee4682f0181c8feb3c3dcb9a1bee6fb059b9
 subplot(224); plot(t,delta_c*rad2deg); title('\delta_c'); hold on;
 %subplot(224); plot(t,dc*rad2deg); title('dc'); hold on; legend('kp*e','ki*e','kd*e');
 
