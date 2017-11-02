@@ -1,15 +1,16 @@
 %% Heading model estimation using LSQ
-set(0,'DefaultLineLineWidth',1.5);
+set(0,'DefaultLineLineWidth',2);
 set(0,'defaultfigurecolor','white');
-%set(0,'defaulttextInterpreter','latex') %latex axis labels
 close all;
 clear all;  % remove for faster compilation
 clc;
-close all; clear all; clc; OPT = optimset('Display','off');
+OPT = optimset('Display','off');
+n = 12;
+set(0,'DefaultAxesColorOrder',brewermap(n,'Paired'))
 %%
 tstart = 0;       %Sim start time
 tstop  = 4000;    %Sim stop time
-tsamp  = 40;     %Sampling time (NOT ODE solver time step)
+tsamp  = 35;     %Sampling time (NOT ODE solver time step)
 
 %System
 p0  = zeros(2,1);           %Initial position (NED)
@@ -27,10 +28,10 @@ psi_d = 8*deg2rad;
 
 % sim BoatyMcBoatface
 
-%% first order system
+%% 1st. order Nomoto
 figure(1); hold on; grid on;xlabel('time [s]'); ylabel('yaw rate [deg/s]'); 
 title('Estimation based on first order system','FontSize',12);
-dc_list = [3 5 8 10 20]*deg2rad;
+dc_list = [3 10 5 8 20]*deg2rad;
 Legend = {};
 for i = 1:1:length(dc_list)
     dc = dc_list(i);
@@ -50,10 +51,11 @@ for i = 1:1:length(dc_list)
     Legend(2*i)   = {strcat('Model, d_c = ', num2str(dc*rad2deg),' deg, T=', num2str(x(1),4), ', K=', num2str(x(2),2))}; 
 end
 legend(Legend);
+
 % figure(3);
 % plot(t,psi);title('psi modell 1');
-%% ulinear modell : forward speed modell
-figure(2); hold on; xlabel('time [s]'); ylabel('yaw rate [m/s]'); 
+%% 2nd. order Nomoto
+figure(2); hold on; grid on; xlabel('time [s]'); ylabel('yaw rate [m/s]'); 
 title('Estimation of 2nd. order Nomoto','FontSize',12);
 Legend = {};
 for i =1:1:length(dc_list)
@@ -78,38 +80,38 @@ legend(Legend);
 % plot(t,psi);title('Yaw rate,r, 2nd. order');
 
 %%
-scrsz = get(groot,'ScreenSize'); 
-    
-fig2 = figure('OuterPosition',[scrsz(3)/2 scrsz(4)/2 scrsz(3)/2 scrsz(4)/2]);
-hold on; grid on; ylabel('Yaw rate [deg/s]'); xlabel('Time [s]');
-title('2st order linear Nomoto model compared to ship response','FontSize',14);
-delta_list = [3 5 8 18]; %maks +-25deg
-legend_string = cell(length(delta_list),1);
-coeff_mtx = zeros(4,length(delta_list));
-for i = 1:length(delta_list) 
-    delta_c = deg2rad*(delta_list(i));
-    dc = delta_c;
-    sim BoatyMcBoatface;
-    x0 = [118 7.8 18.5 0.089]';
-    F = @(x,t) sim_nomoto2(x, dc, tstop, tsamp);
-    [x,psi_est] = lsqcurvefit(F, x0, t, r,[100 100 0 -1],[300 300 400 0.2],OPT);
-    T1 = x(1);
-    T2 = x(2);
-    T3 = x(3);
-    K  = x(4);
-%     x
-    coeff_mtx(:,i) = [T1 T2 T3 K]';
-    plot(t, -rad2deg*(r),'o' );
-    plot(t, -rad2deg*(F(x,t)), 'LineWidth',2);
-    text(500+delta_list(i)*40, 0.1,{['\delta=', num2str(delta_list(i))],['T1=',num2str(T1,3)],['T2=',num2str(T2,3)],['T3=',num2str(T3,3)],['K=',num2str(K,3)]});
-    legend_string{2*i-1} = strcat('Ship, \delta = ',   int2str(delta_list(i)));
-    legend_string{2*i}   = strcat('Nomoto1, \delta = ',int2str(delta_list(i)));
-end
-axis([0 tstop 0 0.55]);
-legend(legend_string);
-coeff_mean = mean(coeff_mtx,2)
-T1 = coeff_mean(1);
-T2 = coeff_mean(2);
-T3 = coeff_mean(3);
-K  = coeff_mean(4);
+% scrsz = get(groot,'ScreenSize'); 
+%     
+% fig2 = figure('OuterPosition',[scrsz(3)/2 scrsz(4)/2 scrsz(3)/2 scrsz(4)/2]);
+% hold on; grid on; ylabel('Yaw rate [deg/s]'); xlabel('Time [s]');
+% title('2st order linear Nomoto model compared to ship response','FontSize',14);
+% delta_list = [3 5 8 18]; %maks +-25deg
+% legend_string = cell(length(delta_list),1);
+% coeff_mtx = zeros(4,length(delta_list));
+% for i = 1:length(delta_list) 
+%     delta_c = deg2rad*(delta_list(i));
+%     dc = delta_c;
+%     sim BoatyMcBoatface;
+%     x0 = [118 7.8 18.5 0.089]';
+%     F = @(x,t) sim_nomoto2(x, dc, tstop, tsamp);
+%     [x,psi_est] = lsqcurvefit(F, x0, t, r,[100 100 0 -1],[300 300 400 0.2],OPT);
+%     T1 = x(1);
+%     T2 = x(2);
+%     T3 = x(3);
+%     K  = x(4);
+% %     x
+%     coeff_mtx(:,i) = [T1 T2 T3 K]';
+%     plot(t, -rad2deg*(r),'o' );
+%     plot(t, -rad2deg*(F(x,t)), 'LineWidth',2);
+%     text(500+delta_list(i)*40, 0.1,{['\delta=', num2str(delta_list(i))],['T1=',num2str(T1,3)],['T2=',num2str(T2,3)],['T3=',num2str(T3,3)],['K=',num2str(K,3)]});
+%     legend_string{2*i-1} = strcat('Ship, \delta = ',   int2str(delta_list(i)));
+%     legend_string{2*i}   = strcat('Nomoto1, \delta = ',int2str(delta_list(i)));
+% end
+% axis([0 tstop 0 0.55]);
+% legend(legend_string);
+% coeff_mean = mean(coeff_mtx,2)
+% T1 = coeff_mean(1);
+% T2 = coeff_mean(2);
+% T3 = coeff_mean(3);
+% K  = coeff_mean(4);
 
