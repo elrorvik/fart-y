@@ -48,7 +48,7 @@ for i = 1:1:length(dc_list)
     plot(t,-r*rad2deg,'o'); 
     plot(t,-F4(x,t)*rad2deg); 
     Legend(2*i-1) = {strcat('Ship, d_c = ', num2str(dc*rad2deg), ' deg')};
-    Legend(2*i)   = {strcat('Model, d_c = ', num2str(dc*rad2deg),' deg, T=', num2str(x(1),4), ', K=', num2str(x(2),2))}; 
+    Legend(2*i)   = {strcat('Model, d_c = ', num2str(dc*rad2deg),' deg, T=', num2str(x(1)), ', K=', num2str(x(2)))}; 
 end
 legend(Legend);
 
@@ -72,9 +72,9 @@ for i =1:1:length(dc_list)
     plot(t,-F(x,t)*rad2deg);
     Legend(2*i-1) = {strcat('Ship, d_c = ', num2str(dc*rad2deg), ' deg')};
     Legend(2*i)   = {strcat('Model, d_c = ', num2str(dc*rad2deg),...
-                    ' deg, ' ,'T1=', num2str(x(1)),', T2=',...
-                    num2str(x(2)), ',T3=', num2str(x(3)),...
-                    ',K=',num2str(x(4)))}; 
+                    ' deg, ' ,'T1=', num2str(x(1),4),', T2=',...
+                    num2str(x(2),4), ',T3=', num2str(x(3),4),...
+                    ',K=',num2str(x(4),4))}; 
 end
 legend(Legend);
 % plot(t,psi);title('Yaw rate,r, 2nd. order');
