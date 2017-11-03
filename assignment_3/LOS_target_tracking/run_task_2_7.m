@@ -36,7 +36,6 @@ wp = wp.WP;
 U_target = 3;     %m/s
 U_max = 9;        %m/s
 Delta_s = 1;      %m/s
-kappa = 0.005;
 
 %nc = 7.3; 
 psi_d = 0*deg2rad;
@@ -59,9 +58,9 @@ x = p(:,1);
 y = p(:,2);
 tstop = t(end);
 
-pathplotter(x, y,  psi, tsamp, 2, tstart, tstop, 1, wp(:,2:end))
+pathplotter(x, y,  psi, tsamp, 2, tstart, tstop, 1, wp)
 
-figure(3);
+figure(4);
 subplot(221); plot(t,u), hold on; plot(t, U_d), legend('u', 'U_d'), title('u');
 subplot(223); plot(t,nc); title('nc'); hold on; legend('kp*e','ki*e');
 subplot(222); plot(t,psi*rad2deg); title('\psi'); hold on;
@@ -69,7 +68,7 @@ plot(t, psi_d*rad2deg), legend('\psi', '\psi_d');
 subplot(224); plot(t,delta_c*rad2deg); title('\delta_c'); hold on;
 %subplot(224); plot(t,dc*rad2deg); title('dc'); hold on; legend('kp*e','ki*e','kd*e');
 
-figure(4);
+figure(5);
 plot(t,beta); hold on;
 plot(t,chi);
 plot(t,chi_d);
