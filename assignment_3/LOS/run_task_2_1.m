@@ -61,11 +61,7 @@ figure(3);
 subplot(221); plot(t,u), title('u');
 subplot(223); plot(t,nc); title('nc'); hold on; legend('kp*e','ki*e');
 subplot(222); plot(t,psi*rad2deg); title('\psi'); hold on;
-<<<<<<< HEAD
 subplot(222); plot(t,psi_tilde*rad2deg); legend('psi', 'psi_tilde'); hold on;
-=======
-plot(t, psi_d*rad2deg), legend('\psi', '\psi_d');
->>>>>>> a6a3ee4682f0181c8feb3c3dcb9a1bee6fb059b9
 subplot(224); plot(t,delta_c*rad2deg); title('\delta_c'); hold on;
 %subplot(224); plot(t,dc*rad2deg); title('dc'); hold on; legend('kp*e','ki*e','kd*e');
 

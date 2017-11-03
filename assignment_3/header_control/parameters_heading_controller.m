@@ -11,7 +11,7 @@ r_d = 0*deg2rad;
 
 %% Controller parameters - psi PID controller
 Kp_psi = 6;
-Ki_psi = 7*10^(-4);
+Ki_psi = 0;%7*10^(-4);
 Kd_psi = 250;
 
 % -- safe values, nomoto1

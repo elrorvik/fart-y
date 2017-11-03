@@ -66,9 +66,9 @@ subplot(224); plot(t,delta_c*rad2deg); title('\delta_c'); hold on;
 %subplot(224); plot(t,dc*rad2deg); title('dc'); hold on; legend('kp*e','ki*e','kd*e');
 
 figure(6);
-plot(t,beta); hold on;
-plot(t,chi);
-plot(t,chi_d);
-plot(t,psi); legend('\beta', '\chi', '\chi_d', '\psi');
+plot(t,beta*rad2deg); hold on;
+plot(t,chi*rad2deg);
+plot(t,chi_d*rad2deg);
+plot(t,psi*rad2deg); legend('\beta', '\chi', '\chi_d', '\psi');
 
 
