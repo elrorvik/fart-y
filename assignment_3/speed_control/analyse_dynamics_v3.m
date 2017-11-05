@@ -13,6 +13,10 @@ c   = 0;                    %Current on (1)/off (0)
 
 addpath(genpath('../header_control'));
 parameters_heading_controller
+delta_max = 25*pi/180;
+delta_min = -delta_max;
+psi_amp = 0;
+psi_freq = 0.1;
 %% first oder system
 figure(1); hold on; xlabel('time [s]'); ylabel('speed [m/s]'); 
 title('Estimation based on first order system','FontSize',12);
@@ -32,11 +36,10 @@ for i = 1:1:length(nc_list)
     Legend(2*i)   = {strcat('Model, n_c = ', int2str(nc_list(i)),' rpm, T=', num2str(k(1),4), ', K=', num2str(k(2),2))}; 
 end
 legend(Legend);
-figure(3);
-plot(t,psi);title('psi modell 1');
+
 %% ulinear modell : forward speed modell
 figure(2); hold on; xlabel('time [s]'); ylabel('speed [m/s]'); 
-title('Estimation based on forward speed modell','FontSize',12);
+title('Estimation based on forward speed system','FontSize',12);
 Legend = {};
 for i =1:1:length(nc_list)
     nc = nc_list(i);
@@ -51,4 +54,3 @@ for i =1:1:length(nc_list)
     Legend(2*i)   = {strcat('Model, n_c = ', int2str(nc_list(i)),' rpm, ' ,'k1=', num2str(k(1),4),', k2=', num2str(k(2),4), ',k2=', num2str(k(3),4))}; 
 end
 legend(Legend);
-plot(t,psi);title('psi modell 2');
