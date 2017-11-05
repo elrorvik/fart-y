@@ -41,7 +41,8 @@ end
 v0  = [4 0]';            %Initial velocity (body)[m/s]
 clf;
 figure(1); hold on; xlabel('time [s]'); ylabel('speed [m/s]'); 
-title('Comparing modell and ship','FontSize',12);
+%title('Comparing modell and ship','FontSize',12);
+title('Comparing modell and ship')
 Legend = {};
 ustepend = 7;
 e_u_limit = 100000;
@@ -57,7 +58,7 @@ wn_u_list = [2,0.05, 0.5]; % not needed on 1
 zeta_u_list = [0.8,2,1];
 nc_gain_list = [1.5, 0.05, 1];
 Ki_u_gain_list = [1,0.3, 1]; % 1 means not done
-for i = 3%1:1:length(nc_list)
+for i = 1:1:length(nc_list)
     c = pid_matrix(i,:);
     if i ==1
         Ki_u_est = c(4)*0.7;
