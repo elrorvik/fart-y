@@ -50,6 +50,16 @@ Kp_psi = 60;
 Ki_psi = 0.07;
 Kd_psi = 650;
 
+% trying recipe in ch. 12.2:
+T = 197.5;
+K = 0.00466/(8*deg2rad);
+
+w_b = 0.125;
+w_n = 1/(sqrt(sqrt(2)))*w_b;
+Kp_psi = (T/K)*w_n^2;
+Kd_psi = 2*w_n*(T/K) - 1/K;
+Ki_psi = 0;%w_n/10 * Kp_psi;
+
 % -- safe values, nomoto1
 % Kp_psi = 0.9;
 % Ki_psi = 0.025/10*Kp_psi;
