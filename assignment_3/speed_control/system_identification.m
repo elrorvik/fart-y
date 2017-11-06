@@ -18,10 +18,11 @@ delta_min = -delta_max;
 psi_amp = 0;
 psi_freq = 0.01;
 
-number_of_poles = 2;
+number_of_poles = 1;
 
-nc_list = [20 40 65 85]*2*pi/60;
-data_matrix = zeros(length(nc_list),11);% number of poles = 2, size 9
+nc_list = [40 65 85]*2*pi/60;
+%data_matrix = zeros(length(nc_list),11);% number of poles = 2, size 9
+data_matrix = zeros(length(nc_list),7);% number of poles = 1, size 9
 pid_matrix = zeros(length(nc_list),7);
 for i = 1:length(nc_list)
     nc = nc_list(i);
@@ -30,11 +31,11 @@ for i = 1:length(nc_list)
     nc_vec = nc*ones(length(u),1);
     data = iddata(u,nc_vec,tsamp);
     sys = tfest(data,number_of_poles);
-    [Wn,zeta] = damp(sys)
+    [Wn,zeta] = damp(sys);
     sys_report = sys.Report;
     fit = sys_report.Fit.FitPercent;
-    %data_matrix(i,:) = [nc,sys.Numerator, sys.Denominator, fit, Wn, Zeta]; size 7
-    data_matrix(i,:) = [nc,sys.Numerator, sys.Denominator, fit, Wn(1), Wn(2), zeta(1), zeta(2)];
+    data_matrix(i,:) = [nc,sys.Numerator, sys.Denominator, fit, Wn, zeta];% size 7
+    %data_matrix(i,:) = [nc,sys.Numerator, sys.Denominator, fit, Wn(1), Wn(2), zeta(1), zeta(2)];
     [C,info] = pidtune(sys,'PID');
     pid_matrix(i,:) = [nc, C.Kp, C.Kd, C.Ki,info.Stable, info.CrossoverFrequency, info.PhaseMargin];
 end
@@ -48,10 +49,10 @@ figure(1); hold on; xlabel('time [s]'); ylabel('speed [m/s]');
 title('Comparing modell and ship')
 Legend = {};
 ustepend = 7;
-nc_list = [20 40 65 85]*2*pi/60;
+nc_list = [40 65 85]*2*pi/60;
 e_u_limit = 100000;
 tstep = 0;
-tstop = 10000;
+tstop = 4000;
 tstart = 0;
 ustep0 = v0(1);
 Kp_u = 80; %500*wn^2*T/K 
@@ -71,8 +72,8 @@ for i = 1:1:length(nc_list)
     Kd_u_est = c(3);
     Kp_u_est = c(2);
     
-    Ki_u = c(4)*Ki_u_gain_list(i);
-    Kp_u_ = c(2);
+    Ki_u = c(4)*Ki_u_gain_list(i)
+    Kp_u_ = c(2)
     nc_gain = nc_gain_list(i);
     
     wn_u = wn_u_list(i);

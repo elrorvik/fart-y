@@ -8,7 +8,7 @@ deg2rad = pi/180;
 rad2deg = 180/pi;
 
 tstart=0;           % Sim start time
-tstop=10000;        % Sim stop time
+tstop=5000;        % Sim stop time
 tsamp=10;           % Sampling time for how often states are stored. (NOT ODE solver time step)
                 
 p0=[1500 500]';      % Initial position (NED)
@@ -34,7 +34,7 @@ R_change_wp = 500;  %m
 wp = load('WP.mat');
 wp = wp.WP;
 U_target = 3;     %m/s
-U_max = 9;        %m/s
+U_max = 7;        %m/s - Wanted it to not be too agressive 
 Delta_s = 1;      %m/s
 
 %nc = 7.3; 
@@ -64,7 +64,7 @@ pathplotter(x, y,  psi, tsamp, 2, tstart, tstop, 1, wp)
 
 figure(4);
 subplot(221); plot(t,u), hold on; plot(t, U_d), legend('u', 'U_d'), title('u');
-subplot(223); plot(t,nc); title('nc'); hold on; legend('kp*e','ki*e');
+subplot(223); plot(t,n_c); title('n_c'); hold on;
 subplot(222); plot(t,psi*rad2deg); title('\psi'); hold on;
 plot(t, psi_d*rad2deg), legend('\psi', '\psi_d');
 subplot(224); plot(t,delta_c*rad2deg); title('\delta_c'); hold on;
