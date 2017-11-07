@@ -9,7 +9,7 @@ rad2deg = 180/pi;
 
 tstart=0;           % Sim start time
 tstop=5000;        % Sim stop time
-tsamp=10;           % Sampling time for how often states are stored. (NOT ODE solver time step)
+tsamp=100;           % Sampling time for how often states are stored. (NOT ODE solver time step)
                 
 p0=[1500 500]';      % Initial position (NED)
 v0=[6.63 0]';       % Initial velocity (body)
@@ -24,7 +24,7 @@ T = 590.2;
 Kp_u = 80; %500*wn^2*T/K 
 Ki_u = 0.08; %1000*wn^3*T/(10*K) 
 Kd_u = 0;
-e_u_limit = 3;
+e_u_limit = 0.7;
 
 L = 304.8;  %m
 Delta = 10*L;
