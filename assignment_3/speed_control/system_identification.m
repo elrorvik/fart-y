@@ -20,10 +20,11 @@ psi_freq = 0.01;
 
 number_of_poles = 1;
 
-nc_list = [40 65 85]*2*pi/60;
+nc_list = [0 20 40 60 70 85]*2*pi/60;
 %data_matrix = zeros(length(nc_list),11);% number of poles = 2, size 9
 data_matrix = zeros(length(nc_list),7);% number of poles = 1, size 9
 pid_matrix = zeros(length(nc_list),7);
+parameter_matrix = zeros(length(nc_list),2);
 for i = 1:length(nc_list)
     nc = nc_list(i);
     sim '../header_control/heading_controller';
@@ -35,6 +36,9 @@ for i = 1:length(nc_list)
     sys_report = sys.Report;
     fit = sys_report.Fit.FitPercent;
     data_matrix(i,:) = [nc,sys.Numerator, sys.Denominator, fit, Wn, zeta];% size 7
+    K = sys.Numerator/sys.Denominator(2);
+    T = sys.Denominator(1)/sys.Denominator(2);
+    parameter_matrix(i,:)=[T , K];
     %data_matrix(i,:) = [nc,sys.Numerator, sys.Denominator, fit, Wn(1), Wn(2), zeta(1), zeta(2)];
     [C,info] = pidtune(sys,'PID');
     pid_matrix(i,:) = [nc, C.Kp, C.Kd, C.Ki,info.Stable, info.CrossoverFrequency, info.PhaseMargin];

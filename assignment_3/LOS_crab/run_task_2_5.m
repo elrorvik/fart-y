@@ -25,6 +25,7 @@ Kp_u = 80; %500*wn^2*T/K
 Ki_u = 0.08; %1000*wn^3*T/(10*K) 
 Kd_u = 0;
 e_u_limit = 3;
+nc_max = (85*2*pi)/60;
 
 L = 304.8;  %m
 Delta = 2.5*L;
@@ -58,17 +59,17 @@ tstop = t(end);
 pathplotter(x, y,  psi, tsamp, 2, tstart, tstop, 0, wp)
 
 figure(3);
-subplot(221); plot(t,u), title('u');
-subplot(223); plot(t,nc); title('nc'); hold on; legend('kp*e','ki*e');
-subplot(222); plot(t,psi*rad2deg); title('\psi'); hold on;
+subplot(221); plot(t,u), title('u'); xlabel('s');ylabel('m/s');
+subplot(223); plot(t,nc); title('nc'); hold on; xlabel('s');ylabel('rad/s');
+subplot(222); plot(t,psi*rad2deg); title('\psi'); hold on; xlabel('s');ylabel('degrees');
 plot(t, psi_d*rad2deg), legend('\psi', '\psi_d');
-subplot(224); plot(t,delta_c*rad2deg); title('\delta_c'); hold on;
+subplot(224); plot(t,delta_c*rad2deg); title('\delta_c'); hold on; xlabel('s'); ylabel('degrees');
 %subplot(224); plot(t,dc*rad2deg); title('dc'); hold on; legend('kp*e','ki*e','kd*e');
 
 figure(4);
-plot(t,beta); hold on;
-plot(t,chi);
-plot(t,chi_d);
-plot(t,psi); legend('\beta', '\chi', '\chi_d', '\psi');
+plot(t,beta*rad2deg); hold on; xlabel('s'); ylabel('degrees');
+plot(t,chi*rad2deg);
+plot(t,chi_d*rad2deg);
+plot(t,psi*rad2deg); legend('\beta', '\chi', '\chi_d', '\psi');
 
 
