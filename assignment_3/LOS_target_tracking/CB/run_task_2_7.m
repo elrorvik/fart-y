@@ -13,7 +13,7 @@ tsamp=100;           % Sampling time for how often states are stored. (NOT ODE s
                 
 p0=[1500 500]';      % Initial position (NED)
 v0=[6.63 0]';       % Initial velocity (body)
-psi0=50*deg2rad;             % Inital yaw angle
+psi0=50*deg2rad;    % Inital yaw angle
 r0=0;               % Inital yaw rate
 c=1;                % Current on (1)/off (0)
 
