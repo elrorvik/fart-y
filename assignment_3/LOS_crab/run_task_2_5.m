@@ -71,9 +71,8 @@ subplot(224); plot(t,delta_c*rad2deg); title('\delta_c'); hold on; xlabel('s'); 
 %subplot(224); plot(t,dc*rad2deg); title('dc'); hold on; legend('kp*e','ki*e','kd*e');
 
 figure(4);
-plot(t,beta*rad2deg); hold on; xlabel('s'); ylabel('degrees');
-plot(t,chi*rad2deg);
-plot(t,chi_d*rad2deg);
-plot(t,psi*rad2deg); legend('\beta', '\chi', '\chi_d', '\psi');
+subplot(221); plot(t,beta*rad2deg); hold on; xlabel('s'); ylabel('degrees');
+subplot(222);plot(t,chi*rad2deg);
+subplot(222); plot(t,chi_d*rad2deg); legend('\chi', '\chi_d');
 
 
