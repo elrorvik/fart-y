@@ -24,7 +24,7 @@ T = 590.2;
 Kp_u = 80; %500*wn^2*T/K 
 Ki_u = 0.08; %1000*wn^3*T/(10*K) 
 Kd_u = 0;
-e_u_limit = 3;
+e_u_limit = 0.7;
 
 L = 304.8;  %m
 Delta = 10*L;
@@ -45,7 +45,6 @@ ustep0 = 4;
 ustepend = 7;
 u_d_vec = 4*ones(1, tstop);
 u_d_vec(tstep:end) = 7*ones(1,tstop-tstep+1);
-
 %u_d = timeseries(u_d_vec);
 
 sim MSFartoystyring_2_7 % The measurements from the simulink model are automatically written to the workspace.
@@ -62,7 +61,7 @@ pathplotter(x, y,  psi, tsamp, 2, tstart, tstop, 1, wp)
 
 figure(4);
 subplot(221); plot(t,u), hold on; plot(t, U_d), legend('u', 'U_d'), title('u');
-subplot(223); plot(t,nc); title('nc'); hold on; legend('kp*e','ki*e');
+subplot(223); plot(t,n_c*rad2deg); title('n_c'); hold on; legend('kp*e','ki*e');
 subplot(222); plot(t,psi*rad2deg); title('\psi'); hold on;
 plot(t, psi_d*rad2deg), legend('\psi', '\psi_d');
 subplot(224); plot(t,delta_c*rad2deg); title('\delta_c'); hold on;

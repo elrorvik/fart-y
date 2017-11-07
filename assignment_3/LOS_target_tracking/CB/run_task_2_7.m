@@ -46,6 +46,10 @@ ustepend = 7;
 u_d_vec = 4*ones(1, tstop);
 u_d_vec(tstep:end) = 7*ones(1,tstop-tstep+1);
 
+% referance model
+zeta = 1;
+omega_psi = 1;
+
 %u_d = timeseries(u_d_vec);
 wn_u = 0.1;
 zeta_u = 1;
