@@ -4,5 +4,5 @@ Kd_u = 0;
 e_u_limit = 0.7;
 
 zeta_u = 1;
-omega_n_u = 0.0015;
+omega_n_u = 0.005; % 0.0106
 nc_max = (85*2*pi)/60;
