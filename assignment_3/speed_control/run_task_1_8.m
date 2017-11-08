@@ -3,12 +3,13 @@ close all;
 
 addpath(genpath('../header_control'));
 parameters_heading_controller; % pick up parameters
+parameters_speed_controller;
 
 deg2rad = pi/180;
 rad2deg = 180/pi;
 
 tstart=0;           % Sim start time
-tstop=2000;        % Sim stop time
+tstop=10000;        % Sim stop time
 tsamp=10;           % Sampling time for how often states are stored. (NOT ODE solver time step)
                 
 p0=zeros(2,1);      % Initial position (NED)
@@ -17,14 +18,6 @@ psi0=0*deg2rad;             % Inital yaw angle
 r0=0;               % Inital yaw rate
 c=1;                % Current on (1)/off (0)
 
-wn = 0.0017;
-K = 0.98;
-T = 590.2;
-
-Kp_u = 80; %500*wn^2*T/K 
-Ki_u =  0.08; %1000*wn^3*T/(10*K) 
-Kd_u = 0;
-e_u_limit = 0.7;
 
 %nc = 7.3; 
 psi_d = 0*deg2rad

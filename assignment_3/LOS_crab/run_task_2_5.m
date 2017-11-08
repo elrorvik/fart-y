@@ -10,6 +10,8 @@ set(0,'defaultLegendInterpreter','latex');
 
 addpath(genpath('../header_control'));
 parameters_heading_controller; % pick up parameters
+addpath(genpath('../speed_control'));
+parameters_speed_controller;
 
 deg2rad = pi/180;
 rad2deg = 180/pi;
@@ -24,16 +26,6 @@ psi0=50*deg2rad;             % Inital yaw angle
 r0=0;               % Inital yaw rate
 c=1;                % Current on (1)/off (0)
 
-wn = 0.0017;
-K = 0.98;
-T = 590.2;
-
-Kp_u = 80; %500*wn^2*T/K 
-Ki_u = 0.08; %1000*wn^3*T/(10*K) 
-Kd_u = 0;
-e_u_limit = 3;
-nc_max = (85*2*pi)/60;
-delta_max = 25*deg2rad;
 
 L = 304.8;  %m
 Delta = 2.5*L;
@@ -43,26 +35,15 @@ R_change_wp = 500;  %m
 wp = load('WP.mat');
 wp = [p0 wp.WP];
 
-%nc = 7.3; 
-psi_d = 0*deg2rad;
-r_d = 0*deg2rad;
-tstep = 500;
-ustep0 = 4;
-ustepend = 7;
-
-w_c = 0.01;
 % referance model
 zeta = 1;
-omega_psi = 1;
-
-%u_d = timeseries(u_d_vec);
+omega_psi = 0.035;
+omega_n_u = 0.0015;
 
 sim MSFartoystyring_2_5 % The measurements from the simulink model are automatically written to the workspace.
 
 u = v(:,1);
 v = v(:,2);
-psi = psi;
-r = r;
 x = p(:,1);
 y = p(:,2);
 tstop = t(end);

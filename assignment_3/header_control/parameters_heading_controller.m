@@ -13,6 +13,7 @@ r_d = 0*deg2rad;
 Kp_psi = 6;
 Ki_psi = 0;%7*10^(-4);
 Kd_psi = 250;
+delta_max = 25*deg2rad;
 
 % -- safe values, nomoto1
 % Kp_psi = 0.9;
