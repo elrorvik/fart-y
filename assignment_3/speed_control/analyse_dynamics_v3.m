@@ -1,5 +1,11 @@
 close all; clear all; clc; OPT = optimset('Display','off');
 
+set(0,'DefaultLineLineWidth',2);
+set(0,'DefaultLegendFontSize',16);
+set(0,'defaultAxesFontSize',11)
+set(0,'defaultTextInterpreter','latex');
+set(0,'defaultLegendInterpreter','latex');
+
 green = [153, 204, 0];
 orange = [255, 153, 51];
 turquis = [0,153,153];
@@ -44,8 +50,8 @@ for i = 1:1:length(nc_list)
     figure(1);
     plot(t,u,'o','Color',color(i,:)); 
     plot(t,F(k,t),'Color',color(i,:)); 
-    Legend(2*i-1) = {strcat('Ship, n_c = ', int2str(nc_list(i)), ' rpm')};
-    Legend(2*i)   = {strcat('Model, n_c = ', int2str(nc_list(i)),' rpm, T=', num2str(k(1),4), ', K=', num2str(k(2),2))}; 
+    Legend(2*i-1) = {strcat('Ship, $n_c$ = ', int2str(nc_list(i)), ' rpm')};
+    Legend(2*i)   = {strcat('Model, $n_c$ = ', int2str(nc_list(i)),' rpm, T=', num2str(k(1),4), ', K=', num2str(k(2),2))}; 
 end
 
 legend(Legend);
@@ -69,8 +75,8 @@ for i =1:1:length(nc_list)
     figure(2);
     plot(t,u,'o','Color',color(i,:)); 
     plot(t,F(k,t),'Color',color(i,:));
-    Legend(2*i-1) = {strcat('Ship, n_c = ', int2str(nc_list(i)), ' rpm')};
-    Legend(2*i)   = {strcat('Model, n_c = ', int2str(nc_list(i)),' rpm, ' ,'k1=', num2str(k(1),4),', k2=', num2str(k(2),4), ',k2=', num2str(k(3),4))}; 
+    Legend(2*i-1) = {strcat('Ship, $n_c$ = ', int2str(nc_list(i)), ' rpm')};
+    Legend(2*i)   = {strcat('Model, $n_c$ = ', int2str(nc_list(i)),' rpm, ' ,'k1=', num2str(k(1),4),', k2=', num2str(k(2),4), ',k2=', num2str(k(3),4))}; 
 end
 legend(Legend);
-%set(0,'DefaultAxesColorOrder',old_colormap);
+set(0,'DefaultAxesColorOrder',old_colormap);

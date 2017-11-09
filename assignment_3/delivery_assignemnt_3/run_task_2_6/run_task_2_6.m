@@ -8,9 +8,8 @@ set(0,'defaultTextInterpreter','latex');
 set(0,'defaultLegendInterpreter','latex');
 
 
-addpath(genpath('../header_control'));
-parameters_heading_controller; % pick up parameters
-addpath(genpath('../speed_control'));
+addpath(genpath('../parameters_controller'));
+parameters_heading_controller; 
 parameters_speed_controller;
 
 deg2rad = pi/180;
@@ -26,22 +25,14 @@ psi0=50*deg2rad;             % Inital yaw angle
 r0=0;               % Inital yaw rate
 c=1;                % Current on (1)/off (0)
 
-
 L = 304.8;  %m
 Delta = 2.5*L;
 Kp_los = 1/Delta;
-R_vel = 300;        %m
 R_change_wp = 500;  %m
 wp = load('WP.mat');
 wp = [p0 wp.WP];
 
-% referance model
-zeta = 1;
-omega_psi = 0.09;
-zeta_u = 1;
-omega_n_u = 0.005;
-
-sim MSFartoystyring_2_5 % The measurements from the simulink model are automatically written to the workspace.
+sim MSFartoystyring_2_6 
 
 u = v(:,1);
 v = v(:,2);
@@ -59,14 +50,14 @@ subplot(222); plot(t,psi*rad2deg); title('$\psi$','FontSize',12);xlabel('time [s
 subplot(222); plot(t, psi_d*rad2deg); hold on;
 subplot(222); plot(t,psi_tilde*rad2deg);legend('$\psi$', '$\psi_d$','$\tilde{\psi}_d$'); hold on;
 subplot(224); plot(t,delta_c*rad2deg); title('$\delta_c$','FontSize',12); xlabel('time [s]'); ylabel('angle [deg]'); hold on;
-%subplot(224); plot(t,dc*rad2deg); title('dc'); hold on; legend('kp*e','ki*e','kd*e');
+
 
 figure(4);hold on;
 subplot(211); plot(t,beta*rad2deg); title('$\beta$','FontSize',12);hold on; xlabel('time [s]'); ylabel('angle [deg]');
 subplot(212);plot(t,psi*rad2deg); title('$\chi$ and $\psi$','FontSize',12);hold on;
 subplot(212);plot(t,chi*rad2deg); xlabel('time [s]'); ylabel('angle [deg]');  hold on;
 subplot(212); plot(t,chi_d*rad2deg); legend('$\psi$','$\chi$', '$\chi_d$'); hold on;
-% 
+ 
 
 
 

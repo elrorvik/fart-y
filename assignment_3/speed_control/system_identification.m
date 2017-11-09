@@ -20,7 +20,7 @@ psi_freq = 0.01;
 
 number_of_poles = 1;
 
-nc_list = [0 20 40 60 70 85]*2*pi/60;
+nc_list = [40 65 85]*2*pi/60;
 %data_matrix = zeros(length(nc_list),11);% number of poles = 2, size 9
 data_matrix = zeros(length(nc_list),7);% number of poles = 1, size 9
 pid_matrix = zeros(length(nc_list),7);
@@ -69,19 +69,22 @@ nc_gain_list = [1.5, 0.05, 1];
 Ki_u_gain_list = [1,0.3, 1]; % 1 means not done
 for i = 1:1:length(nc_list)
     c = pid_matrix(i,:);
-    if i ==1
-        Ki_u_est = c(4)*0.7;
-    end
-    Ki_u_est = c(4)*0.7;
+%     if i ==1
+%         Ki_u_est = c(4)*0.7;
+%     end
+%     Ki_u_est = c(4)*0.7;
+%     Kd_u_est = c(3);
+%     Kp_u_est = c(2);
+    Ki_u_est = c(4);
     Kd_u_est = c(3);
     Kp_u_est = c(2);
+
+    Ki_u = Ki_u_est;
+    Kp_u = Kp_u_est;
+    nc_gain = 1;
     
-    Ki_u = c(4)*Ki_u_gain_list(i)
-    Kp_u_ = c(2)
-    nc_gain = nc_gain_list(i);
-    
-    wn_u = wn_u_list(i);
-    zeta_u = zeta_u_list(i);
+    wn_u = 0.005;
+    zeta_u = 1;
     
     den =data_matrix(i,2);
     num= data_matrix(i,3:4);
