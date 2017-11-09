@@ -9,6 +9,12 @@ set(0,'defaultLegendInterpreter','latex');
 
 addpath(genpath('../../header_control'));
 parameters_heading_controller; % pick up parameters
+addpath(genpath('../../speed_control'));
+parameters_speed_controller; 
+
+omega_n_psi = 0.035;
+omega_n_u = 0.005; % 0.0106
+zeta_psi = 1;
 
 deg2rad = pi/180;
 rad2deg = 180/pi;
@@ -60,6 +66,7 @@ omega_psi = 1;
 %u_d = timeseries(u_d_vec);
 wn_u = 0.1;
 zeta_u = 1;
+
 
 sim MSFartoystyring_2_7 % The measurements from the simulink model are automatically written to the workspace.
 
