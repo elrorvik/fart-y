@@ -9,6 +9,8 @@ set(0,'defaultLegendInterpreter','latex');
 
 addpath(genpath('../header_control'));
 parameters_heading_controller; % pick up parameters
+addpath(genpath('../speed_control'));
+parameters_speed_controller;
 
 deg2rad = pi/180;
 rad2deg = 180/pi;
